@@ -12,4 +12,6 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class Weather implements Serializable {
     public String Description;
+    public String icon;
+
 }

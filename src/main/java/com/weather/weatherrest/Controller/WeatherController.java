@@ -1,7 +1,10 @@
 package com.weather.weatherrest.Controller;
 
+
 import com.weather.weatherrest.Model.OpenWeatherResponse;
 import com.weather.weatherrest.Model.Weather;
+import com.weather.weatherrest.Model.Main;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -20,7 +23,7 @@ public class WeatherController {
 
     @RequestMapping(value = {"","/weather"})
     public String Home(Model model){
-        String uri="https://api.openweathermap.org/data/2.5/weather?q=Mumbai&appid=d0f0af2cc00cf5396f3c216247eb9fdb";
+        String uri="https://api.openweathermap.org/data/2.5/weather?q=russia&appid=d0f0af2cc00cf5396f3c216247eb9fdb";
         ResponseEntity<OpenWeatherResponse> currentWeatherResponseEntity = restTemplate.getForEntity(uri, OpenWeatherResponse.class);
         System.out.println(currentWeatherResponseEntity.getBody().getMain());
         List<Weather> weathers = currentWeatherResponseEntity.getBody().getWeather();
@@ -31,7 +34,18 @@ public class WeatherController {
         return "home.html";
     }
 
-
+    @RequestMapping(value = {"/fivedays"})
+    public String fivedays(Model model){
+        String uri="https://api.openweathermap.org/data/2.5/weather?q=russia&appid=d0f0af2cc00cf5396f3c216247eb9fdb";
+        ResponseEntity<OpenWeatherResponse> currentWeatherResponseEntity = restTemplate.getForEntity(uri, OpenWeatherResponse.class);
+        System.out.println(currentWeatherResponseEntity.getBody().getMain());
+        List<Weather> weathers = currentWeatherResponseEntity.getBody().getWeather();
+        currentWeatherResponseEntity.getBody().getMain().setTemp(currentWeatherResponseEntity.getBody().getMain().getTemp()-273);
+        model.addAttribute("name",currentWeatherResponseEntity.getBody().getName());
+        model.addAttribute("main",currentWeatherResponseEntity.getBody().getMain());
+        model.addAttribute("weather",weathers.get(0));
+        return "home.html";
+    }
 
 
 

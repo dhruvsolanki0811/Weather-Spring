@@ -17,21 +17,17 @@
             <div class="col-12 col-md-5 col-sm-12 col-xs-12">
                 <div class="card text-white">
 
-                    <div class="div1 p-4 p-md-5 " style=" background: url('https://i.imgur.com/sTfvzrM.jpg');
-            background-repeat: no-repeat;
-            background-size: cover;
-            background-attachment:local;
-            border-radius: 16px 16px 0 0;">
-                        <h5 th:text="${name}"></h5>
+                    <div class="div1 p-4 p-md-5 " >
+                        <h5 th:text="${name}" ></h5>
 
 
-                        <h1 th:text="${main.temp}"><sup>&deg;C </sup> </h1>
+<!--                        <h1 th:text="${main.temp}" ><sup>&deg;C</sup></h1>-->
+                        <h1  th:inline="text" >[[${main.temp}]]<sup>&deg;C</sup></h1>
 
 
-
-                        <h4 class="my-0" th:text="'Mostly '+${weather.description}">Mostly clear</h4>
+                        <h4 class="my-0" th:text="'Mostly '+${weather.description}">Mostly clear </h4>
+                        <img th:src="'https://openweathermap.org/img/w/'+${weather.icon}+'.png'">
                     </div>
-
 
                     <div class="div2">
 

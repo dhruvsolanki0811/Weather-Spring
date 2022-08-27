@@ -6,7 +6,12 @@ border-radius: 15px;
 color: #6f707d;
 }
 
-
+.div1{
+            color:black;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment:local;
+            border-radius: 16px 16px 0 0;}
 
         .div2{
             height: 30px;
