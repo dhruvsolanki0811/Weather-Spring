@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Marcellus&display=swap');
+
+
+.card {
+border-radius: 15px;
+color: #6f707d;
+}
+
+
+
+        .div2{
+            height: 30px;
+            background-color: #9fe0fa;
+            border-radius: 0 0 15px 15px;
+        }
+
+        h1{
+            font-size: 65px;
+        }
+
+        sup{
+            font-size: 17px;
+            position: relative;
+            top: -2rem;
+        }
+
+
+         *:focus{
+            outline: none;
+        }
