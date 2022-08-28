@@ -21,6 +21,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class WeatherController {
@@ -50,8 +51,16 @@ public class WeatherController {
         FiveDays fiveDays = currentWeatherResponseEntity.getBody();
 
 
+
         List<OpenWeatherResponse> list= fiveDays.getList();
-        System.out.println(weatherServices.getTime());
+        String time=weatherServices.getTime();
+        List<OpenWeatherResponse> data = list.stream()
+                .filter(p -> p.getDt_txt().substring(p.getDt_txt().length() - 8).equals(time.substring(time.length()-8))).collect(Collectors.toList());
+
+//        System.out.println(data);
+        model.addAttribute("data",data);
+        model.addAttribute("city",fiveDays.getCity().getName());
+
         return "fivedays";
     }
 

@@ -1,12 +1,41 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://thymeleaf.org">
 <head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
     <meta charset="UTF-8">
     <title></title>
 </head>
 
 <body>
 <div th:replace="header :: header">...</div>
+<div class="card-deck"
+     th:each="deck: ${data}">
+    <span th:text="${deck.main.temp + ': '}">
+    </span>
+    <span th:text="${deck.dt_txt + ': '}">
+    </span>
+    <span class="card"
+          th:each="card: ${deck.weather}"
+          th:text="${card.Description }+'   '+${card.icon}">
 
+    </span>
+
+
+</div>
+<div class="container">
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
+    <div class="col mb-4" th:each="deck: ${data}">
+        <div class="card">
+            <div class="card-body bg-dark">
+                <h5 class="card-title text-light" th:inline="text">[[${city}]]</h5>
+                <p class="card-text text-light">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+            </div>
+        </div>
+    </div>
+
+    </div>
+</div>
 </body>
 </html>
