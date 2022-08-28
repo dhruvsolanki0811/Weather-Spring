@@ -10,32 +10,32 @@
 
 <body>
 <div th:replace="header :: header">...</div>
-<div class="card-deck"
-     th:each="deck: ${data}">
-    <span th:text="${deck.main.temp + ': '}">
-    </span>
-    <span th:text="${deck.dt_txt + ': '}">
-    </span>
-    <span class="card"
-          th:each="card: ${deck.weather}"
-          th:text="${card.Description }+'   '+${card.icon}">
 
-    </span>
-
-
-</div>
 <div class="container">
+
+
+    <div></div>
 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
     <div class="col mb-4" th:each="deck: ${data}">
         <div class="card">
-            <div class="card-body bg-dark">
-                <h5 class="card-title text-light" th:inline="text">[[${city}]]</h5>
-                <p class="card-text text-light">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+            <div class="card-body bg-dark text-light">
+                <h5 class="card-title " th:inline="text">[[${city}]]</h5>
+                <h1  th:inline="text" >[[${deck.main.temp}-273]]<sup>&deg;C</sup></h1>
+                <span
+                      th:each="card: ${deck.weather}"
+                      th:text="${card.Description}"></span>
+               <span> <img th:each="card: ${deck.weather}" th:src="'https://openweathermap.org/img/w/'+${card.icon}+'.png'">
+                </span>
+                <p  class="card-title" th:inline="text">[[${deck.dt_txt}]]</p>
+
             </div>
         </div>
     </div>
 
     </div>
+
+
+<div th:replace="footer :: footer">...</div>
 </div>
 </body>
 </html>

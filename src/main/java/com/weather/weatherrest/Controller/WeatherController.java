@@ -13,7 +13,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.client.RestTemplate;
 
 import java.text.SimpleDateFormat;
@@ -46,7 +48,7 @@ public class WeatherController {
 
     @RequestMapping(value = {"/five"})
     public String fivedays(Model model){
-        String uri="https://api.openweathermap.org/data/2.5/forecast?q=russia&appid=d0f0af2cc00cf5396f3c216247eb9fdb";
+        String uri="https://api.openweathermap.org/data/2.5/forecast?q=RUSSIA&appid=d0f0af2cc00cf5396f3c216247eb9fdb";
         ResponseEntity<FiveDays> currentWeatherResponseEntity = restTemplate.getForEntity(uri,FiveDays.class);
         FiveDays fiveDays = currentWeatherResponseEntity.getBody();
 
@@ -57,7 +59,6 @@ public class WeatherController {
         List<OpenWeatherResponse> data = list.stream()
                 .filter(p -> p.getDt_txt().substring(p.getDt_txt().length() - 8).equals(time.substring(time.length()-8))).collect(Collectors.toList());
 
-//        System.out.println(data);
         model.addAttribute("data",data);
         model.addAttribute("city",fiveDays.getCity().getName());
 
