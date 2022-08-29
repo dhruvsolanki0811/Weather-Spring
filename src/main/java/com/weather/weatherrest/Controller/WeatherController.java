@@ -13,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 
 import java.text.SimpleDateFormat;
@@ -24,6 +26,8 @@ import java.util.stream.Collectors;
 
 @Controller
 public class WeatherController {
+
+
 
     @Autowired
     RestTemplate restTemplate;
@@ -44,28 +48,37 @@ public class WeatherController {
     }
 
     @RequestMapping(value = {"/five"},method = RequestMethod.GET)
-    public String fivedays(Model model,@RequestParam(required = false) String city){
-        if(city==null){
-            city="brooklyn";
+    public String fivedays(Model model,@RequestParam(required = false) String city,@RequestParam(required = false) String error) {
+        if (city == null) {
+            city = "brooklyn";
         }
-        String uri="https://api.openweathermap.org/data/2.5/forecast?q="+city+"&appid=d0f0af2cc00cf5396f3c216247eb9fdb";
-        ResponseEntity<FiveDays> currentWeatherResponseEntity = restTemplate.getForEntity(uri,FiveDays.class);
+        if(error!=null){
+            model.addAttribute("error",error);
+        }
+        String uri = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=d0f0af2cc00cf5396f3c216247eb9fdb";
+        try{
+        ResponseEntity<FiveDays> currentWeatherResponseEntity = restTemplate.getForEntity(uri, FiveDays.class);
+
         FiveDays fiveDays = currentWeatherResponseEntity.getBody();
 
 
-
-        List<OpenWeatherResponse> list= fiveDays.getList();
-        String time=weatherServices.getTime();
+        List<OpenWeatherResponse> list = fiveDays.getList();
+        String time = weatherServices.getTime();
         List<OpenWeatherResponse> data = list.stream()
-                .filter(p -> p.getDt_txt().substring(p.getDt_txt().length() - 8).equals(time.substring(time.length()-8))).collect(Collectors.toList());
+                .filter(p -> p.getDt_txt().substring(p.getDt_txt().length() - 8).equals(time.substring(time.length() - 8))).collect(Collectors.toList());
 
-        model.addAttribute("data",data);
-        model.addAttribute("city",fiveDays.getCity().getName());
+        model.addAttribute("data", data);
+        model.addAttribute("city", fiveDays.getCity().getName());
 
-        return "fivedays";
     }
+        catch (HttpClientErrorException e){
+//            return "/five?error"+e.getStatusText();
+                fivedays(model,"brooklyn",city+e.getStatusText());
+        }
+        return "/fivedays";
 
 
 
 
+    }
 }

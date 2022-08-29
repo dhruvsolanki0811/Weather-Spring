@@ -12,7 +12,8 @@
 <div th:replace="header :: header">...</div>
 
 <div class="container">
-
+    <div class="alert alert-dark" role="alert" th:if="${!#strings.isEmpty(error)}" th:text="${error}">
+    </div>
 <!--Search start-->
     <div class="row py-2">
         <form class="col-md-6 d-flex mx-auto" method="get" onsubmit="/five">
